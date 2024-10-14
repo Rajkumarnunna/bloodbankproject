@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Donate Blood</title>
+    <script src="src/main/resources/static/js/donate.js" defer></script>
+</head>
+<body>
+    <h1>Donate Blood</h1>
+    <form id="donateForm">
+        <label for="donorName">Donor Name:</label>
+        <input type="text" id="donorName" name="donorName" required>
+
+        <label for="bloodGroup">Blood Group:</label>
+        <input type="text" id="bloodGroup" name="bloodGroup" required>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+
+        <button type="submit">Donate Blood</button>
+    </form>
+    
+    <div id="donationStatus">
+        <!-- Donation status will be shown here -->
+    </div>
+</body>
+</html>
