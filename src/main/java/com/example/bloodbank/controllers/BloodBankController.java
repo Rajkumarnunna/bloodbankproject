@@ -25,7 +25,7 @@ public class BloodBankController {
                              @RequestParam String email,
                              @RequestParam String phone,
                              @RequestParam String bloodType) {
-        System.out.println("Registering user: " + name); // Debugging log
+        System.out.println("Registering user: " + name);
         bloodService.registerUser(name, email, phone, bloodType);
     }
 }
