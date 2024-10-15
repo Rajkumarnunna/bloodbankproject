@@ -23,6 +23,6 @@ public class RegistrationController {
     @PostMapping("/register")
     public String registerUser(User user) {
         userService.registerUser(user);
-        return "redirect:/login";
+        return "redirect:/login?registered";
     }
 }

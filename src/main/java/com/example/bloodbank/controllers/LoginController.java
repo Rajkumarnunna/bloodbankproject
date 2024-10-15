@@ -1,34 +1,39 @@
 package com.example.bloodbank.controllers;
 
-import com.example.bloodbank.entities.User;
-import com.example.bloodbank.repository.UserRepository;
+import com.example.bloodbank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Optional;
 
 @Controller
 public class LoginController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     @Autowired
-    public LoginController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public LoginController(UserService userService) {
+        this.userService = userService;
     }
 
-    @PostMapping("/login")
-    public String processLogin(@RequestParam String email, @RequestParam String password, Model model) {
-        Optional<User> user = Optional.ofNullable(userRepository.findByEmail(email));
+    // Show login page
+    @GetMapping("/login")
+    public String showLoginForm() {
+        return "login";
+    }
 
-        if (user.isPresent() && user.get().getPassword().equals(password)) {
-            return "redirect:/"; // redirect to home page after successful login
+    // Handle login form submission
+    @PostMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String password, Model model) {
+        if (userService.authenticateUser(email, password)) {
+            // Redirect to dashboard if login is successful
+            return "redirect:/dashboard";
         } else {
+            // If login fails, display an error message
             model.addAttribute("error", "Invalid email or password");
-            return "login"; // show login page with error message
+            return "login";
         }
     }
 }

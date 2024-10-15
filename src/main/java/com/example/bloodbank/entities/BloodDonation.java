@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "blood_requests")
-public class BloodRequest {
+@Table(name = "blood_donations")
+public class BloodDonation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,8 +17,8 @@ public class BloodRequest {
     private User user;
 
     private String bloodGroup;
-    private int unitsRequired;
-    private LocalDateTime requestDate;
+    private int unitsProvided;
+    private LocalDateTime donationDate;
     private String status;
 	public Long getId() {
 		return id;
@@ -38,17 +38,17 @@ public class BloodRequest {
 	public void setBloodGroup(String bloodGroup) {
 		this.bloodGroup = bloodGroup;
 	}
-	public int getUnitsRequired() {
-		return unitsRequired;
+	public int getUnitsProvided() {
+		return unitsProvided;
 	}
-	public void setUnitsRequired(int unitsRequired) {
-		this.unitsRequired = unitsRequired;
+	public void setUnitsProvided(int unitsProvided) {
+		this.unitsProvided = unitsProvided;
 	}
-	public LocalDateTime getRequestDate() {
-		return requestDate;
+	public LocalDateTime getDonationDate() {
+		return donationDate;
 	}
-	public void setRequestDate(LocalDateTime requestDate) {
-		this.requestDate = requestDate;
+	public void setDonationDate(LocalDateTime donationDate) {
+		this.donationDate = donationDate;
 	}
 	public String getStatus() {
 		return status;
