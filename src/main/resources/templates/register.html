@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <h1>User Registration</h1>
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" th:field="*{firstName}" required>
+        <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" th:field="*{lastName}" required>
+        <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" th:field="*{email}" required>
+        <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" required>
+        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+
+        <label for="bloodType">Blood Type:</label>
+        <input type="text" id="bloodType" th:field="*{bloodType}" required>
+        <span th:if="${#fields.hasErrors('bloodType')}" th:errors="*{bloodType}"></span>
+
+        <label for="location">Location:</label>
+        <input type="text" id="location" th:field="*{location}" required>
+        <span th:if="${#fields.hasErrors('location')}" th:errors="*{location}"></span>
+
+        <button type="submit">Register</button>
+    </form>
+    <div th:if="${successMessage}" th:text="${successMessage}"></div>
+</body>
+</html>

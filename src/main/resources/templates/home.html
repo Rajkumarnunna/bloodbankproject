@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Blood Bank Management System</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to Blood Bank Management System</h1>
+        <nav>
+            <ul>
+                <li><a th:href="@{/register}">User Registration</a></li>
+                <li><a th:href="@{/check-availability}">Check Blood Availability</a></li>
+                <li><a th:href="@{/request-blood}">Request Blood</a></li>
+                <li><a th:href="@{/donate-blood}">Donate Blood</a></li>
+                <li><a th:href="@{/admin/approve-reject}">Approve/Reject Requests</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <p>Blood Bank Management System (BBMS) helps donors and requestors register, check blood availability, request blood, and donate blood.</p>
+    </main>
+    <footer>
+        <p>&copy; 2024 Blood Bank Management System</p>
+    </footer>
+</body>
+</html>

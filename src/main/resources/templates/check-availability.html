@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Check Blood Availability</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Check Blood Availability</h1>
+    </header>
+    <main>
+        <form th:action="@{/check-availability}" method="get">
+            <label for="userId">User ID:</label>
+            <input type="text" id="userId" name="userId" required>
+
+            <button type="submit">Check Availability</button>
+        </form>
+
+        <div>
+            <h2>Available Blood</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Blood Group</th>
+                        <th>Available Units</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="blood : ${bloodList}">
+                        <td th:text="${blood.group}"></td>
+                        <td th:text="${blood.units}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Blood Bank Management System</p>
+    </footer>
+</body>
+</html>

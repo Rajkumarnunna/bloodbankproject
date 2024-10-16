@@ -1,0 +1,86 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Form Styles */
+form {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 600px; /* Limit form width */
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold; /* Make labels bold */
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    transition: border-color 0.3s; /* Smooth transition */
+}
+
+input:focus {
+    border-color: #28a745; /* Highlight input on focus */
+    outline: none; /* Remove default outline */
+}
+
+/* Button Styles */
+button {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px; /* Increase button font size */
+    transition: background 0.3s; /* Smooth transition */
+}
+
+button:hover {
+    background: #218838;
+}
+
+/* Message Styles */
+.message {
+    color: #d9534f; /* Bootstrap danger color */
+    text-align: center; /* Center align messages */
+    margin: 10px 0;
+}
+
+/* Footer Styles */
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px 0;
+    background: #fff; /* Footer background */
+    box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    form {
+        padding: 15px; /* Reduce padding on smaller screens */
+    }
+
+    button {
+        width: 100%; /* Full-width buttons on small screens */
+    }
+}

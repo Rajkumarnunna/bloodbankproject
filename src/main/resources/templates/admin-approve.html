@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Approval</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Admin Approval</h1>
+    </header>
+    <main>
+        <div th:each="request : ${requests}">
+            <h2>Approval Request for Blood</h2>
+            <p>Requester ID: <span th:text="${request.requesterId}"></span></p>
+            <p>Patient Name: <span th:text="${request.patientName}"></span></p>
+            <p>Required Blood Group: <span th:text="${request.requiredBloodGroup}"></span></p>
+            <p>City: <span th:text="${request.city}"></span></p>
+            <p>Doctor's Name: <span th:text="${request.doctorName}"></span></p>
+            <p>Hospital Name: <span th:text="${request.hospitalName}"></span></p>
+            <p>Date of Requirement: <span th:text="${request.dateOfRequirement}"></span></p>
+            <p>Contact Name: <span th:text="${request.contactName}"></span></p>
+            <p>Contact Number: <span th:text="${request.contactNumber}"></span></p>
+            <p>Contact Email: <span th:text="${request.contactEmail}"></span></p>
+            <p>Message: <span th:text="${request.message}"></span></p>
+
+            <form th:action="@{/admin/approve/{id}(id=${request.id})}" method="post">
+                <button type="submit">Approve</button>
+            </form>
+            <form th:action="@{/admin/reject/{id}(id=${request.id})}" method="post">
+                <button type="submit">Reject</button>
+            </form>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Blood Bank Management System</p>
+    </footer>
+</body>
+</html>
