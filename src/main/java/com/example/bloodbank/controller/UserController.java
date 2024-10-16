@@ -30,4 +30,17 @@ public class UserController {
         User registeredUser = userService.registerUser(user);
         return ResponseEntity.ok(registeredUser);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody UserDTO userDTO) {
+        // Validate login logic
+        boolean isAuthenticated = userService.authenticate(userDTO.getEmail(), userDTO.getPassword());
+
+        if (isAuthenticated) {
+            // Here, you might want to return a JWT token or success message
+            return ResponseEntity.ok("Login successful");
+        } else {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        }
+    }
 }
