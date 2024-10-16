@@ -15,30 +15,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            // Authorization settings
-            .authorizeHttpRequests(authorizeRequests ->
+            .authorizeHttpRequests(authorizeRequests -> 
                 authorizeRequests
-                    .requestMatchers("/public/**").permitAll() // Allow access to public resources
-                    .requestMatchers("/api/users/register", "/api/users/login").permitAll() // Allow access to registration and login
+                    .requestMatchers("/api/users/register").permitAll() // Allow user registration
+                    .requestMatchers("/api/login").permitAll() // Allow login access
                     .anyRequest().authenticated() // All other requests require authentication
             )
-            // Form login settings
-            .formLogin(formLogin ->
-                formLogin
-                    .loginPage("/bloodbank/login") // Custom login page URL
-                    .defaultSuccessUrl("/bloodbank/home", true) // Redirect to home page upon successful login
-                    .permitAll() // Allow everyone to access the login page
-            )
-            // Logout settings
-            .logout(logout ->
-                logout
-                    .logoutUrl("/bloodbank/logout") // Custom logout URL
-                    .logoutSuccessUrl("/bloodbank/login?logout") // Redirect to login page after logout
-                    .permitAll() // Allow everyone to access the logout functionality
-            )
-            .csrf().disable(); // Disable CSRF protection if you're using stateless REST APIs
+            .formLogin().loginPage("/login").permitAll() // Specify login page if using form-based auth
+            .and()
+            .logout().permitAll() // Allow logout access
+            .and()
+            .csrf().disable(); // Disable CSRF protection for simplicity in API (consider enabling in production)
 
         return http.build();
     }
-
 }
