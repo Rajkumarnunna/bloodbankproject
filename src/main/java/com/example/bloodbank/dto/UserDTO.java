@@ -1,21 +1,14 @@
 package com.example.bloodbank.dto;
 
-import jakarta.validation.constraints.NotBlank;
-
 public class UserDTO {
-    @NotBlank(message = "First name is required")
+
     private String firstName;
-
-    @NotBlank(message = "Last name is required")
     private String lastName;
-
-    @NotBlank(message = "Blood group is required")
     private String bloodGroup;
-
-    @NotBlank(message = "City is required")
     private String city;
+    private String role;  // Add role field here
 
-    // Getters and Setters
+    // Getters and setters
     public String getFirstName() {
         return firstName;
     }
@@ -40,7 +33,7 @@ public class UserDTO {
         this.bloodGroup = bloodGroup;
     }
 
-    public @NotBlank(message = "City is required") String getCity() {
+    public String getCity() {
         return city;
     }
 
@@ -48,13 +41,16 @@ public class UserDTO {
         this.city = city;
     }
 
-	public String getEmail() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getRole() {   // Add getter for role
+        return role;
+    }
 
-	public String getPassword() {
+    public void setRole(String role) {   // Add setter for role
+        this.role = role;
+    }
+
+	public void setUsername(String username) {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 }

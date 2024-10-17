@@ -1,22 +1,33 @@
 package com.example.bloodbank.dto;
 
-import java.time.LocalDateTime;
-
 public class DonationRequestDTO {
-    private Long userId;
-    private LocalDateTime donationDate;
-	public Long getUserId() {
-		return userId;
-	}
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
-	public LocalDateTime getDonationDate() {
-		return donationDate;
-	}
-	public void setDonationDate(LocalDateTime donationDate) {
-		this.donationDate = donationDate;
-	}
 
-  
+    private String patientName;
+    private String bloodGroup;
+    private String city;
+
+    // Getters and Setters
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 }

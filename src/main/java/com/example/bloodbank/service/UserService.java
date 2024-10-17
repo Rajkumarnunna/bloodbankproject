@@ -1,5 +1,6 @@
 package com.example.bloodbank.service;
 
+import com.example.bloodbank.dto.UserDTO;
 import com.example.bloodbank.entity.User;
 import com.example.bloodbank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,12 @@ public class UserService {
     }
 
     public boolean authenticate(String email, String password) {
-        User user = userRepository.findByEmail(email); // Assume you have a method to find user by email
+        User user = (User) userRepository.findAll(); // Assume you have a method to find user by email
         return user != null && passwordEncoder.matches(password, user.getPassword()); // Compare hashed passwords
     }
+
+	public UserDTO getUserById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

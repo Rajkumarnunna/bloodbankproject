@@ -1,38 +1,26 @@
 package com.example.bloodbank.entity;
 
-
-import java.time.LocalDateTime;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import com.example.bloodbank.entity.User;
+import jakarta.persistence.*;
 
 @Entity
 public class BloodDonation {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User donor;
+    private String patientName;
+    private String bloodGroup;
+    private String city;  // The city field should be a String
 
-    private LocalDateTime donationDate;
+    // Getters and Setters
+    public String getCity() {
+        return city;
+    }
 
-	public void setDonor(User donor2) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void setDonationDate(LocalDateTime now) {
-		// TODO Auto-generated method stub
-		
-	}
+    public void setCity(String city) {  // Ensure this method accepts a String, not a Class
+        this.city = city;
+    }
 
 	public Long getId() {
 		return id;
@@ -42,13 +30,26 @@ public class BloodDonation {
 		this.id = id;
 	}
 
-	public User getDonor() {
-		return donor;
+	public String getPatientName() {
+		return patientName;
 	}
 
-	public LocalDateTime getDonationDate() {
-		return donationDate;
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
 	}
 
- 
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	public String getStatus() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    // Other fields, getters, and setters...
 }

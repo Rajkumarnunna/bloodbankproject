@@ -3,31 +3,36 @@ package com.example.bloodbank.controller;
 import com.example.bloodbank.dto.UserDTO;
 import com.example.bloodbank.entity.User;
 import com.example.bloodbank.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @PostMapping("/register")
-    public ResponseEntity<User> registerUser(@RequestBody @Validated UserDTO userDTO) {
-        // Convert UserDTO to User
+    public ResponseEntity<String> registerUser(@RequestBody UserDTO userDTO) {
+        // Convert UserDTO to User entity
         User user = new User();
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
-        user.setEmail(userDTO.getEmail());
-        user.setPassword(userDTO.getPassword());
-        user.setBloodType(userDTO.getBloodGroup());
+        user.setBloodGroup(userDTO.getBloodGroup());
         user.setCity(userDTO.getCity());
+        user.setRole(userDTO.getRole());
 
-        // Call the service to save the user
-        User registeredUser = userService.registerUser(user);
-        return ResponseEntity.ok(registeredUser);
+        userService.registerUser(user);  // Pass the User entity to the service
+        return ResponseEntity.ok("User registered successfully.");
+    }
+
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<UserDTO> getUserProfile(@PathVariable Long id) {
+        UserDTO userDTO = userService.getUserById(id);
+        return ResponseEntity.ok(userDTO);
     }
 }
