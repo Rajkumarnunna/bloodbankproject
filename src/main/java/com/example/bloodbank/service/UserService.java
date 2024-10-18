@@ -2,6 +2,7 @@ package com.example.bloodbank.service;
 
 import com.example.bloodbank.dto.UserDTO;
 import com.example.bloodbank.entity.User;
+import com.example.bloodbank.exception.ResourceNotFoundException;
 import com.example.bloodbank.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,18 +18,24 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public User registerUser(User user) {
-        // Encrypt password before saving
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        // Ensure to encrypt the password before saving
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // Encrypt the password
         return userRepository.save(user);
     }
 
-    public boolean authenticate(String email, String password) {
-        User user = (User) userRepository.findAll(); // Assume you have a method to find user by email
-        return user != null && passwordEncoder.matches(password, user.getPassword()); // Compare hashed passwords
-    }
+    public UserDTO getUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        
+        // Convert User entity to UserDTO before returning
+        UserDTO userDTO = new UserDTO();
+        userDTO.setFirstName(user.getFirstName());
+        userDTO.setLastName(user.getLastName());
+        userDTO.setBloodGroup(user.getBloodGroup());
+        userDTO.setCity(user.getCity());
+        userDTO.setRole(user.getRole());
+        userDTO.setUsername(user.getUsername());  // Assuming UserDTO has a username field
 
-	public UserDTO getUserById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+        return userDTO;
+    }
 }

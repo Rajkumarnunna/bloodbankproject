@@ -4,13 +4,11 @@ import com.example.bloodbank.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
 
     private final CustomUserDetailsService userDetailsService;
@@ -22,30 +20,32 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())  // Disable CSRF protection (make sure to enable this in production)
+            .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> 
                 auth
-                    .requestMatchers("/login", "/register", "/home", "/donate", "/request-blood").permitAll()  // Publicly accessible pages
-                    .requestMatchers("/admin/**").hasRole("ADMIN")  // Admin pages require ADMIN role
-                    .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")  // User pages require USER or ADMIN roles
-                    .anyRequest().authenticated()  // All other pages require authentication
+                    .requestMatchers("/register", "/login", "/css/**", "/js/**").permitAll()  // Allow public access to these paths
+                    .anyRequest().authenticated()  // Protect all other paths
             )
-            .formLogin(form -> 
-                form.loginPage("/login")  // Custom login page
-                    .defaultSuccessUrl("/home", true)  // Redirect to home page after successful login
+            .formLogin(form ->
+                form.loginPage("/login")  // Specify custom login page
+                    .defaultSuccessUrl("/home", true)  // Redirect to /home after successful login
                     .permitAll()
             )
-            .logout(logout -> 
-                logout.logoutUrl("/logout")  // Custom logout URL
+            .logout(logout ->
+                logout.logoutUrl("/logout")
                     .logoutSuccessUrl("/login?logout")  // Redirect to login page after logout
                     .permitAll()
             );
 
-        return http.build();  // Return the built HttpSecurity object
+        return http.build();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();  // Password encoder to hash passwords
+        return new BCryptPasswordEncoder();
     }
+
+	public CustomUserDetailsService getUserDetailsService() {
+		return userDetailsService;
+	}
 }

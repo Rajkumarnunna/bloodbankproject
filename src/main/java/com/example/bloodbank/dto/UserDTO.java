@@ -1,5 +1,7 @@
 package com.example.bloodbank.dto;
 
+import com.example.bloodbank.entity.User;
+
 public class UserDTO {
 
     private String firstName;
@@ -8,7 +10,11 @@ public class UserDTO {
     private String city;
     private String role;  // Add role field here
 
-    // Getters and setters
+    public UserDTO() {
+		// TODO Auto-generated constructor stub
+	}
+
+	// Getters and setters
     public String getFirstName() {
         return firstName;
     }
