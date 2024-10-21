@@ -1,4 +1,3 @@
-// BloodBankController.java
 package com.example.bloodbank.controller;
 
 import com.example.bloodbank.entity.User;
@@ -37,5 +36,15 @@ public class BloodBankController {
         userService.registerUser(user);
         model.addAttribute("successMessage", "User registered successfully!");
         return "index"; // Redirect to index after registration
+    }
+
+    @GetMapping("/home")
+    public String homePage() {
+        return "home"; // Points to home.html
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login"; // Points to login.html
     }
 }

@@ -1,45 +1,44 @@
 package com.example.bloodbank;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.example.bloodbank.entity.User;
 import com.example.bloodbank.repository.UserRepository;
 import com.example.bloodbank.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+@SpringBootTest
+public class UserServiceTest {
 
-class UserServiceTest {
-
-    @InjectMocks
+    @Autowired
     private UserService userService;
 
-    @Mock
+    @MockBean
     private UserRepository userRepository;
 
-    @Mock
-    private BCryptPasswordEncoder passwordEncoder;  // Add this mock
-
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Test
-    void testRegisterUser() {
+    public void testRegisterUser() {
+        // Given
         User user = new User();
         user.setUsername("testuser");
-        user.setPassword("password");
+        user.setPassword("password");  // Plain password for input
 
-        when(passwordEncoder.encode("password")).thenReturn("hashedPassword");
-        when(userRepository.save(any(User.class))).thenReturn(user);
+        // When
+        userService.registerUser(user);  // The password will be hashed in the service
 
-        userService.registerUser(user);
-        verify(userRepository, times(1)).save(any(User.class));
-        assertEquals("hashedPassword", user.getPassword());  // Ensure the password was encoded
+        // Then
+        // Ensure that the password is now hashed
+        assertNotEquals("password", user.getPassword());  // Check it's no longer plain
+        assertTrue(passwordEncoder.matches("password", user.getPassword())); // Check that the hashed password matches
     }
 }

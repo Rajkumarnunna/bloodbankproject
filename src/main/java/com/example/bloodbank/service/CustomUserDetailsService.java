@@ -1,7 +1,7 @@
 package com.example.bloodbank.service;
 
-import com.example.bloodbank.entity.User;
-import com.example.bloodbank.repository.UserRepository;
+import com.example.bloodbank.repository.UserRepository; // Adjust the import as per your package structure
+import com.example.bloodbank.entity.User; // Adjust the import as per your package structure
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,9 +24,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        // If role is a String
         List<GrantedAuthority> authorities = Collections.singletonList(
-            new SimpleGrantedAuthority("ROLE_" + user.getRole()) // No name() method needed
+            new SimpleGrantedAuthority("ROLE_" + user.getRole()) // Add ROLE_ prefix
         );
 
         return new org.springframework.security.core.userdetails.User(
@@ -35,4 +34,5 @@ public class CustomUserDetailsService implements UserDetailsService {
                 authorities
         );
     }
+
 }

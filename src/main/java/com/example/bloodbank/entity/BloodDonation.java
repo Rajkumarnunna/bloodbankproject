@@ -9,47 +9,58 @@ public class BloodDonation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String patientName;
+    private String donorName;
     private String bloodGroup;
-    private String city;  // The city field should be a String
+    private String city;
+    private String status;
+    private double amount;
 
     // Getters and Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getDonorName() {
+        return donorName;
+    }
+
+    public void setDonorName(String donorName) {
+        this.donorName = donorName;
+    }
+
+    public String getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {  // Ensure this method accepts a String, not a Class
+    public void setCity(String city) {
         this.city = city;
     }
 
-	public Long getId() {
-		return id;
-	}
+    public String getStatus() {
+        return status;
+    }
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-	public String getPatientName() {
-		return patientName;
-	}
+    public double getAmount() {
+        return amount;
+    }
 
-	public void setPatientName(String patientName) {
-		this.patientName = patientName;
-	}
-
-	public String getBloodGroup() {
-		return bloodGroup;
-	}
-
-	public void setBloodGroup(String bloodGroup) {
-		this.bloodGroup = bloodGroup;
-	}
-
-	public String getStatus() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-    // Other fields, getters, and setters...
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
 }

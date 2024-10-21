@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <h1>An error occurred</h1>
+    <p th:text="${'Status code: ' + statusCode}"></p>
+    <p th:text="${'Error message: ' + errorMessage}"></p>
+    <a href="/">Go back to homepage</a>
+</body>
+</html>

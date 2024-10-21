@@ -1,26 +1,41 @@
 package com.example.bloodbank.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
-public class User {
+public class User implements UserDetails, Serializable {
+
+    private static final long serialVersionUID = 1L; // Declare serialVersionUID
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
-    private String password;
     private String firstName;
     private String lastName;
-
-    @NotBlank(message = "Blood group is required")
     private String bloodGroup;
-
     private String city;
+    private String role;
+    private String username;
+    private String password;
 
-    private String role; // Role remains as a String
+    // Getters and Setters for all fields...
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Return authorities as a list of GrantedAuthority
+        return List.of(() -> role); // Assuming role is a single string
+    }
 
     public Long getId() {
 		return id;
@@ -28,22 +43,6 @@ public class User {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public String getFirstName() {
@@ -78,12 +77,53 @@ public class User {
 		this.city = city;
 	}
 
-	// Getters and Setters for all fields including 'role'
-    public String getRole() {
-        return role;
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@Override
+    public String getPassword() {
+        return password;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true; // Implement your logic if needed
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true; // Implement your logic if needed
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true; // Implement your logic if needed
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true; // Implement your logic if needed
     }
 }
