@@ -1,22 +1,15 @@
 package com.example.bloodbank.entity;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import java.util.Collection;
+import java.util.Collections;
 
 @Entity
-public class User implements UserDetails, Serializable {
-
-    private static final long serialVersionUID = 1L; // Declare serialVersionUID
-
+@Table(name = "users")
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,105 +18,103 @@ public class User implements UserDetails, Serializable {
     private String lastName;
     private String bloodGroup;
     private String city;
-    private String role;
+
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(nullable = false)
     private String password;
 
-    // Getters and Setters for all fields...
+    private String role; // Role can define user permissions
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Return authorities as a list of GrantedAuthority
-        return List.of(() -> role); // Assuming role is a single string
-    }
-
+    // Getters and Setters
     public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getBloodGroup() {
-		return bloodGroup;
-	}
-
-	public void setBloodGroup(String bloodGroup) {
-		this.bloodGroup = bloodGroup;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	@Override
-    public String getPassword() {
-        return password;
+        return id;
     }
 
-    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getBloodGroup() {
+        return bloodGroup;
+    }
+
+    public void setBloodGroup(String bloodGroup) {
+        this.bloodGroup = bloodGroup;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     public String getUsername() {
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    // UserDetails methods
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(() -> "ROLE_" + role); // Adjust role to match Spring Security conventions
+    }
+
     @Override
     public boolean isAccountNonExpired() {
-        return true; // Implement your logic if needed
+        return true; // Customize as needed
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true; // Implement your logic if needed
+        return true; // Customize as needed
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true; // Implement your logic if needed
+        return true; // Customize as needed
     }
 
     @Override
     public boolean isEnabled() {
-        return true; // Implement your logic if needed
+        return true; // Customize as needed
     }
 }

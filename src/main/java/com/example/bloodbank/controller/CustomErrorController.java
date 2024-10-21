@@ -11,20 +11,26 @@ import jakarta.servlet.http.HttpServletRequest;
 @Controller
 public class CustomErrorController implements ErrorController {
 
+    // Endpoint to handle errors
     @RequestMapping("/error")
     public String handleError(HttpServletRequest request, Model model) {
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
+        // Retrieve the error status code from the request
+        Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
         
-        if (status != null) {
-            Integer statusCode = Integer.valueOf(status.toString());
+        // If a status code is present, add it to the model
+        if (statusCode != null) {
             model.addAttribute("statusCode", statusCode.toString());
             
-            // Get the error message
-            Object message = request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
-            if (message != null) {
-                model.addAttribute("errorMessage", message.toString());
+            // Retrieve the error message from the request and add it to the model
+            String errorMessage = (String) request.getAttribute(RequestDispatcher.ERROR_MESSAGE);
+            if (errorMessage != null) {
+                model.addAttribute("errorMessage", errorMessage);
             }
         }
-        return "error";  // Create an error.html template in your templates directory
+        
+        // Return the name of the error template
+        return "error";  // Ensure you have an error.html template in your templates directory
     }
+
+   
 }

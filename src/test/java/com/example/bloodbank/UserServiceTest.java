@@ -1,8 +1,10 @@
 package com.example.bloodbank;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,9 @@ public class UserServiceTest {
         User user = new User();
         user.setUsername("testuser");
         user.setPassword("password");  // Plain password for input
+
+        // Mock the repository behavior for findByUsername
+        when(userRepository.findByUsername("testuser")).thenReturn(Optional.empty()); // No existing user
 
         // When
         userService.registerUser(user);  // The password will be hashed in the service

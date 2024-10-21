@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin
 public class UserController {
 
     private final UserService userService;
@@ -22,26 +23,35 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserDTO userDTO) {
-        User user = mapToUser(userDTO);
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-
-        userService.registerUser(user);
-        return ResponseEntity.ok("User registered successfully.");
+    public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
+        try {
+            User user = mapToUser(userDTO);
+            user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+            userService.registerUser(user);
+            return ResponseEntity.ok("User registered successfully.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @GetMapping("/profile/{id}")
-    public ResponseEntity<UserDTO> getUserProfile(@PathVariable Long id) {
-        UserDTO userDTO = userService.getUserById(id);
-        return ResponseEntity.ok(userDTO);
+    public ResponseEntity<?> getUserProfile(@PathVariable Long id) {
+        try {
+            UserDTO userDTO = userService.getUserById(id);
+            return ResponseEntity.ok(userDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> loginUser(@RequestBody UserDTO userDTO) {
         boolean isAuthenticated = userService.login(userDTO.getUsername(), userDTO.getPassword());
-        return isAuthenticated 
-            ? ResponseEntity.ok("Login successful.") 
-            : ResponseEntity.status(401).body("Invalid credentials.");
+        if (isAuthenticated) {
+            return ResponseEntity.ok("Login successful");
+        } else {
+            return ResponseEntity.status(401).body("Invalid credentials");
+        }
     }
 
     private User mapToUser(UserDTO userDTO) {
